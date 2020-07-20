@@ -141,6 +141,11 @@ module.exports = () => {
     deposit: compose(require('../../api/ledger/deposit')),
     withdraw: compose(require('../../api/ledger/withdraw'))
   }
+  dvf.walletConnect = {
+    register: compose(require('../../api/walletConnect/register')),
+    deposit: compose(require('../../api/walletConnect/deposit')),
+    createDepositData: compose(require('../../lib/stark/walletConnect/createDepositData'))
+  }
   dvf.estimatedNextBatchTime = compose(require('../../api/estimatedNextBatchTime'))
   return dvf
 }
