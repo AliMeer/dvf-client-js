@@ -24,6 +24,10 @@ module.exports = () => {
   }
 
   dvf.stark = {
+    register: compose(require('../../api/stark/register')),
+    deposit: compose(require('../../api/stark/deposit')),
+    // withdraw: compose(require('../../api/stark/withdraw')),
+
     createOrder: compose(require('../stark/createOrder')),
     createMarketOrder: compose(require('../stark/createMarketOrder')),
     createOrderMessage: require('../stark/createOrderMessage'),
@@ -31,7 +35,8 @@ module.exports = () => {
     createTransferMsg: require('../stark/createTransferMessage'),
     createPrivateKey: require('../stark/createPrivateKey'),
     createKeyPair: require('../stark/createKeyPair'),
-    register: require('../../api/contract/register'),
+    contract : {
+    register: require('../../api/contract/register')},
     formatStarkPublicKey: require('../stark/formatStarkPublicKey'),
     ledger: {
       getPath: compose(require('../stark/ledger/getPath')),
@@ -40,6 +45,19 @@ module.exports = () => {
         require('../stark/ledger/createWithdrawalData')
       ),
       createDepositData: compose(require('../stark/ledger/createDepositData')),
+      createSignedTransfer: compose(
+        require('../stark/ledger/createSignedTransfer')
+      ),
+      createSignedOrder: compose(
+        require('../../lib/stark/ledger/createSignedOrder')
+      )
+    },
+    walletConnect: {
+      getPublicKey: compose(require('../stark/ledger/getPublicKey')),
+      createWithdrawalPayload: compose(
+        require('../stark/ledger/createWithdrawalData')
+      ),
+      createDepositPayload: compose(require('../stark/ledger/createDepositData')),
       createSignedTransfer: compose(
         require('../stark/ledger/createSignedTransfer')
       ),
@@ -99,7 +117,7 @@ module.exports = () => {
   dvf.sign.nonceSignature = compose(require('../../api/sign/nonceSignature'))
 
   dvf.postAuthenticated = compose(require('../../lib/dvf/post-authenticated'))
-
+  dvf.createDepositPayload = compose(require('../../lib/dvf/createDepositPayload'))
   dvf.createOrderPayload = compose(require('../../lib/dvf/createOrderPayload'))
   dvf.createMarketOrderPayload = compose(require('../../lib/dvf/createMarketOrderPayload'))
   dvf.createOrderMetaData = compose(
@@ -140,11 +158,6 @@ module.exports = () => {
   dvf.ledger = {
     deposit: compose(require('../../api/ledger/deposit')),
     withdraw: compose(require('../../api/ledger/withdraw'))
-  }
-  dvf.walletConnect = {
-    register: compose(require('../../api/walletConnect/register')),
-    deposit: compose(require('../../api/walletConnect/deposit')),
-    createDepositData: compose(require('../../lib/stark/walletConnect/createDepositData'))
   }
   dvf.estimatedNextBatchTime = compose(require('../../api/estimatedNextBatchTime'))
   return dvf

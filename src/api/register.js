@@ -22,7 +22,7 @@ module.exports = async (dvf, starkPublicKey, nonce, signature) => {
   }
 
   if (userRegistered.deFiSignature) {
-    const onchainRegister = await dvf.stark.register(
+    const onchainRegister = await dvf.stark.contract.register(
       dvf,
       starkKey,
       userRegistered.deFiSignature
